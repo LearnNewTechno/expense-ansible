@@ -1,8 +1,26 @@
 - name: My SQL server config
   hosts: mysql
   become: yes
+  vars:
+    mysql_root_password: ExpenseApp1
+    login_host: mysql.ravijavadevops.site
   tasks:
   - name: create my sql server
     ansible.builtin.package:
       name: mysql-server
       state: present
+  - name: start mysql server
+    ansible.builtin.service:
+      name: mysqld
+      state: started
+      enabled: yes
+  - name: connect MySql 
+    community_mysql.mysql_info:
+      login_user: root
+      login_password: {{ mysql_root_password }}
+      login_host: {{ login_host }}
+    register: mysql_info
+
+  - name: print my sql info
+    ansible.builtin.debug:
+      msg: {{ mysql_info }}
