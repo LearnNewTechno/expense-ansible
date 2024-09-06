@@ -1,6 +1,9 @@
 - name: config banckend
   hosts: backend
   become: yes
+  vars:
+    mysql_root_password: ExpenseApp1
+    login_host: mysql.ravijavadevops.site
   tasks:
   - name: disable nodejs
     ansible.builtin.command: dnf module disable nodejs -y
@@ -42,12 +45,19 @@
     ansible.builtin.copy: 
       src: backend.service
       dest: /etc/systemd/system/backend.service
+      
+  - name: ansible to install PyMySQL
+    ansible.builtin.pip:
+      name:
+      - PyMySQL
+      - cryptography
+      executable: pip3.9
 
-  # - name: import mysql db
-  #   community.mysql.mysqldb:
-  #     name: all
-  #     state: dump
-  #     login_user: root
-  #     login_password: "{{ mysql_root_password }}"
-  #     login_host: "{{ login_host }}"
-  #     target: /app/schema/backend.sql
+  - name: import mysql db
+    community.mysql.mysqldb:
+      name: all
+      state: import
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
