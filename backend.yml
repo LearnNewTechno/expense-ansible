@@ -45,7 +45,7 @@
     ansible.builtin.copy: 
       src: backend.service
       dest: /etc/systemd/system/backend.service
-      
+
   - name: ansible to install PyMySQL
     ansible.builtin.pip:
       name:
@@ -61,3 +61,9 @@
       login_password: "{{ mysql_root_password }}"
       login_host: "{{ login_host }}"
       target: /app/schema/backend.sql
+
+  # - name: daemon reload
+  #   ansible.builtin.systemd_service:
+  #     daemon_reload: true
+  #     state: restarted
+  #     name: backend
