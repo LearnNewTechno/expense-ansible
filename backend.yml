@@ -38,10 +38,10 @@
     args:
       chdir: /app
 
-  # - name: copy backend service
-  #   ansible.builtin.copy: 
-  #     src: backend.service
-  #     dest: /etc/systemd/system/backend.service
+  - name: copy backend service
+    ansible.builtin.copy: 
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
 
   # - name: import mysql db
   #   community.mysql.mysqldb:
