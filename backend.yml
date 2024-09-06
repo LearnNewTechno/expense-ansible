@@ -54,7 +54,7 @@
       executable: pip3.9
 
   - name: import mysql db
-    community.mysql.mysqldb:
+    community.mysql.mysql_db:
       name: all
       state: import
       login_user: root
