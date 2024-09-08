@@ -25,10 +25,10 @@
 
   - name: create app directory
     ansible.builtin.file:
-      name: app_app
+      path: /app
       state: directory
 
-  - name: downlaod backend code
+  - name: download the backend code
     ansible.builtin.get_url:
       url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
       dest: /tmp/backend.zip
@@ -36,7 +36,7 @@
   - name: extract the code
     ansible.builtin.unarchive:
       src: /tmp/backend.zip #by default ansible thinks this is in ansible server
-      dest: /app_app
+      dest: /app
       remote_src: yes
 
   - name: install dependencies
